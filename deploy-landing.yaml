@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: landing-page
-  namespace: staging
+  namespace: production
   labels:
     run: landing-page
 spec:
@@ -18,7 +18,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: landing-page
-  namespace: staging
+  namespace: production
 spec:
   replicas: 2
   selector:
@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: landing-page
-        image: smufti21/staging-landing:latest
+        image: smufti21/nginx-landing-page:latest
         ports:
           - containerPort: 80
 ---
@@ -39,13 +39,13 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: landing-page-ingress
-  namespace: staging
+  namespace: production
   annotations:
     #nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   rules:
-  - host: stlanding.sm21.xyz
+  - host: landing.sm21.xyz
     http:
       paths:
       #- path: /
